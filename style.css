@@ -6,6 +6,8 @@
     font-style: normal;
 }
 
+
+
 main {
     display: flex;
     flex-direction: column;
@@ -28,5 +30,32 @@ canvas
 #toolbox
 {
     border-radius: 10px;
+    width: 200px;
     background-color: #BBC397;
+}
+
+#toolbox-items
+{
+    display: flex;
+    gap: 10px;
+}
+
+.item 
+{
+    width: 50px;
+    height: 50px;
+    background-color: blanchedalmond;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.item:hover
+{
+    background-color: yellow;
+}
+
+
+.active 
+{
+    border: 3px solid black;
 }
