@@ -14,24 +14,23 @@ main {
     align-items: center;
 }
 
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #EEE; 
+    border-radius: 10px;
+} 
+
 canvas
 {
-    border-radius: 10px;
     background-color: #BBC397;
-    aspect-ratio: 9/16;
-    height: 1920px ; 
-    transform: scale(0.25);
-    transform-origin: top left;
-    position: absolute;
-    overflow: hidden;
-  
 }
 
 #toolbox
 {
     border-radius: 10px;
     width: 200px;
-    background-color: #BBC397;
 }
 
 #toolbox-items

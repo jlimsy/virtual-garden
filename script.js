@@ -1,13 +1,36 @@
-const canvas = document.getElementById("garden");
-const ctx = canvas.getContext("2d");
+const stage = new Konva.Stage({
+  container: "garden",
+  width: 270,
+  height: 480,
+});
 
-const img = new Image();
-img.src =
-  "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmRmNXI2bnN1dWY3YXRtYnViZWVrb3RuejJkZW15bnY0ZGo5aHpuNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPiQlhna3B3yL4c/giphy.gif";
+// ********** SET THE BACKGROUND COLOR **********
 
-img.onload = function () {
-  console.log("image loaded");
-};
+const layer = new Konva.Layer();
+stage.add(layer);
+
+const background = new Konva.Rect({
+  x: 0,
+  y: 0,
+  width: stage.width(),
+  height: stage.height(),
+  fill: "green",
+  stroke: "black",
+  strokeWidth: 4,
+});
+
+layer.add(background);
+
+const circle = new Konva.Circle({
+  x: stage.width() / 2,
+  y: stage.height() / 2,
+  radius: 100,
+  fill: "red",
+  draggable: true,
+});
+layer.add(circle);
+
+// ********** TOOLBOX ITEMS **********
 
 const flower = document.getElementById("flower");
 const tree = document.getElementById("tree");
@@ -16,10 +39,10 @@ let flowerActive = false;
 let treeActive = false;
 
 flower.onclick = function () {
-  console.log("flower");
   flowerActive = !flowerActive;
 
   flower.classList.toggle("active", flowerActive);
+  updateCanvas();
 };
 
 tree.onclick = function () {
@@ -29,26 +52,40 @@ tree.onclick = function () {
   tree.classList.toggle("active", treeActive);
 };
 
-canvas.addEventListener("click", (e) => {
-  if (!img.complete) return;
+// ********** ADDING THE IMAGES **********
 
-  const rect = canvas.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
+const imageObj = new Image();
+imageObj.src = "assets/teachersday.png";
 
-  console.log(rect, x, y);
+let flowerNode = null;
 
-  ctx.drawImage(img, x, y, 20, 10);
+imageObj.onload = function () {
+  flowerNode = new Konva.Image({
+    x: 50,
+    y: 50,
+    image: imageObj,
+    draggable: true,
+  });
+};
 
-  if (flowerActive) {
-    ctx.fillText("🌸", x, y);
+const updateCanvas = () => {
+  console.log("updateCanvas", flowerActive, treeActive);
+
+  if (flowerActive && flowerNode) {
+    layer.add(flowerNode);
   }
-});
+};
 
 const download = document.getElementById("download");
 download.addEventListener("click", () => {
+  const dataURL = stage.toDataURL({
+    pixelRatio: 2,
+  });
+
   const link = document.createElement("a");
   link.download = "garden.png";
-  link.href = canvas.toDataURL();
+  link.href = dataURL;
+  document.body.appendChild(link);
   link.click();
+  document.body.removeChild(link);
 });
