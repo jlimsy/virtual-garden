@@ -14,8 +14,7 @@ const background = new Konva.Rect({
   y: 0,
   width: stage.width(),
   height: stage.height(),
-  fill: "green",
-  stroke: "black",
+  fill: "#BBC397",
   strokeWidth: 4,
 });
 
@@ -29,6 +28,13 @@ const circle = new Konva.Circle({
   draggable: true,
 });
 layer.add(circle);
+
+// ********** TRANSFORMATIONS **********
+
+const tr = new Konva.Transformer();
+layer.add(tr);
+
+tr.nodes([circle]);
 
 // ********** TOOLBOX ITEMS **********
 
@@ -59,6 +65,33 @@ imageObj.src = "assets/teachersday.png";
 
 let flowerNode = null;
 
+async function loadImageAsBase64(url) {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function addImage() {
+  const base64 = await loadImageAsBase64("assets/teachersday.png");
+  const image = new Image();
+  image.src = base64;
+  image.onload = () => {
+    const konvaImage = new Konva.Image({
+      image: image,
+      x: 50,
+      y: 50,
+      width: 200,
+      height: 200,
+    });
+    layer.add(konvaImage);
+    layer.draw();
+  };
+}
+
 imageObj.onload = function () {
   flowerNode = new Konva.Image({
     x: 50,
@@ -72,14 +105,29 @@ const updateCanvas = () => {
   console.log("updateCanvas", flowerActive, treeActive);
 
   if (flowerActive && flowerNode) {
-    layer.add(flowerNode);
+    addImage();
+    // layer.add(flowerNode);
   }
 };
+
+// ********** SVG **********
+
+const SOURCE = "https://konvajs.org/assets/tiger.svg";
+Konva.Image.fromURL(SOURCE, (imageNode) => {
+  layer.add(imageNode);
+  imageNode.setAttrs({
+    width: 150,
+    height: 150,
+    draggable: true,
+  });
+});
+
+// ********** DOWNLOAD **********
 
 const download = document.getElementById("download");
 download.addEventListener("click", () => {
   const dataURL = stage.toDataURL({
-    pixelRatio: 2,
+    pixelRatio: 3,
   });
 
   const link = document.createElement("a");

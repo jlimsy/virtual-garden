@@ -21,7 +21,6 @@ flower.onclick = function () {
 };
 
 tree.onclick = function () {
-  console.log("tree");
   treeActive = !treeActive;
 
   tree.classList.toggle("active", treeActive);
