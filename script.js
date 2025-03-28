@@ -17,8 +17,9 @@ const background = new Konva.Rect({
   fill: "#BBC397",
   strokeWidth: 4,
 });
-
 layer.add(background);
+
+// ********** ELEMENTS **********
 
 const circle = new Konva.Circle({
   x: stage.width() / 2,
@@ -26,8 +27,43 @@ const circle = new Konva.Circle({
   radius: 100,
   fill: "red",
   draggable: true,
+  name: "circle",
 });
 layer.add(circle);
+
+// create rectangle
+const rect1 = new Konva.Rect({
+  x: 60,
+  y: 60,
+  width: 100,
+  height: 90,
+  fill: "red",
+  name: "rect",
+  draggable: true,
+});
+layer.add(rect1);
+
+const rect2 = new Konva.Rect({
+  x: 250,
+  y: 100,
+  width: 150,
+  height: 90,
+  fill: "green",
+  name: "rect",
+  draggable: true,
+});
+layer.add(rect2);
+
+const SOURCE = "https://jmp.sh/s/LkLgA40MTzD6VFtJcFLx.svg";
+Konva.Image.fromURL(SOURCE, (imageNode) => {
+  layer.add(imageNode);
+  imageNode.setAttrs({
+    width: 150,
+    height: 150,
+    draggable: true,
+    name: "ranunculus",
+  });
+});
 
 // ********** ROTATE & SCALE **********
 
@@ -40,11 +76,16 @@ let selectionRectangle = new Konva.Rect({
 });
 layer.add(selectionRectangle);
 
+console.log("Selection Rectangle", selectionRectangle);
+console.log("stage", stage);
+
 let x1, y1, x2, y2;
 stage.on("mousedown touchstart", (e) => {
-  if (e.target !== stage) {
+  if (e.target !== stage && e.target !== background) {
     return;
   }
+
+  console.log("mousedown", e.target);
   x1 = stage.getPointerPosition().x;
   y1 = stage.getPointerPosition().y;
   x2 = stage.getPointerPosition().x;
@@ -81,9 +122,10 @@ stage.on("mouseup touchend", () => {
     selectionRectangle.visible(false);
   });
 
-  var shapes = stage.find(".rect");
-  var box = selectionRectangle.getClientRect();
-  var selected = shapes.filter((shape) =>
+  const shapes = stage.find("Shape").filter((shape) => shape.draggable());
+  console.log("shapes", shapes);
+  const box = selectionRectangle.getClientRect();
+  const selected = shapes.filter((shape) =>
     Konva.Util.haveIntersection(box, shape.getClientRect())
   );
   tr.nodes(selected);
@@ -103,24 +145,17 @@ stage.on("click tap", function (e) {
   }
 
   // do nothing if clicked NOT on our rectangles
-  if (!e.target.hasName("rect")) {
+  if (!e.target.draggable()) {
     return;
   }
 
-  // do we pressed shift or ctrl?
   const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
-  const isSelected = tr.nodes().indexOf(e.target) >= 0;
+  const isSelected = tr.nodes().includes(e.target);
 
   if (!metaPressed && !isSelected) {
-    // if no key pressed and the node is not selected
-    // select just one
     tr.nodes([e.target]);
   } else if (metaPressed && isSelected) {
-    // if we pressed keys and node was selected
-    // we need to remove it from selection:
-    const nodes = tr.nodes().slice(); // use slice to have new copy of array
-    // remove node from array
-    nodes.splice(nodes.indexOf(e.target), 1);
+    const nodes = tr.nodes().filter((node) => node !== e.target);
     tr.nodes(nodes);
   } else if (metaPressed && !isSelected) {
     // add the node into selection
@@ -198,22 +233,10 @@ const updateCanvas = () => {
   console.log("updateCanvas", flowerActive, treeActive);
 
   if (flowerActive && flowerNode) {
-    addImage();
-    // layer.add(flowerNode);
+    // addImage();
+    layer.add(flowerNode);
   }
 };
-
-// ********** SVG **********
-
-const SOURCE = "https://konvajs.org/assets/tiger.svg";
-Konva.Image.fromURL(SOURCE, (imageNode) => {
-  layer.add(imageNode);
-  imageNode.setAttrs({
-    width: 150,
-    height: 150,
-    draggable: true,
-  });
-});
 
 // ********** DOWNLOAD **********
 
