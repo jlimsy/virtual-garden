@@ -4,6 +4,14 @@ const stage = new Konva.Stage({
   height: 480,
 });
 
+// ********** URL **********
+
+const elementsURL = {
+  logo: "https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/logo.svg",
+  ranunculus:
+    "https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/010_ranunculus.svg",
+};
+
 // ********** SET THE BACKGROUND COLOR **********
 
 const layer = new Konva.Layer();
@@ -19,44 +27,51 @@ const background = new Konva.Rect({
 });
 layer.add(background);
 
+// ********** LOGO **********
+
+const logo = elementsURL.logo;
+Konva.Image.fromURL(logo, (imageNode) => {
+  layer.add(imageNode);
+  imageNode.setAttrs({
+    name: "logo",
+  });
+
+  const scaleFactor = 0.25;
+
+  imageNode.scale({
+    x: scaleFactor,
+    y: scaleFactor,
+  });
+
+  const stageWidth = layer.getStage().width();
+  const stageHeight = layer.getStage().height();
+
+  // Set anchor point to center of image
+  imageNode.offsetX(imageNode.width() / 2);
+  imageNode.offsetY(imageNode.height() / 2);
+
+  imageNode.position({
+    x: stageWidth / 2,
+    y: stageHeight - 25,
+  });
+
+  layer.draw();
+});
+
 // ********** ELEMENTS **********
 
 const circle = new Konva.Circle({
   x: stage.width() / 2,
   y: stage.height() / 2,
   radius: 100,
-  fill: "red",
+  fill: "ivory",
   draggable: true,
   name: "circle",
 });
 layer.add(circle);
 
-// create rectangle
-const rect1 = new Konva.Rect({
-  x: 60,
-  y: 60,
-  width: 100,
-  height: 90,
-  fill: "red",
-  name: "rect",
-  draggable: true,
-});
-layer.add(rect1);
-
-const rect2 = new Konva.Rect({
-  x: 250,
-  y: 100,
-  width: 150,
-  height: 90,
-  fill: "green",
-  name: "rect",
-  draggable: true,
-});
-layer.add(rect2);
-
-const SOURCE =
-  "https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/010_ranunculus.svg";
-Konva.Image.fromURL(SOURCE, (imageNode) => {
+const ranunculus = elementsURL.ranunculus;
+Konva.Image.fromURL(ranunculus, (imageNode) => {
   layer.add(imageNode);
   imageNode.setAttrs({
     width: 150,
@@ -187,55 +202,11 @@ tree.onclick = function () {
   tree.classList.toggle("active", treeActive);
 };
 
-// ********** ADDING THE IMAGES **********
-
-const imageObj = new Image();
-imageObj.src = "assets/teachersday.png";
-
-let flowerNode = null;
-
-async function loadImageAsBase64(url) {
-  const response = await fetch(url);
-  const blob = await response.blob();
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result);
-    reader.readAsDataURL(blob);
-  });
-}
-
-async function addImage() {
-  const base64 = await loadImageAsBase64("assets/teachersday.png");
-  const image = new Image();
-  image.src = base64;
-  image.onload = () => {
-    const konvaImage = new Konva.Image({
-      image: image,
-      x: 50,
-      y: 50,
-      width: 200,
-      height: 200,
-    });
-    layer.add(konvaImage);
-    layer.draw();
-  };
-}
-
-imageObj.onload = function () {
-  flowerNode = new Konva.Image({
-    x: 50,
-    y: 50,
-    image: imageObj,
-    draggable: true,
-  });
-};
-
 const updateCanvas = () => {
   console.log("updateCanvas", flowerActive, treeActive);
 
   if (flowerActive && flowerNode) {
     // addImage();
-    layer.add(flowerNode);
   }
 };
 
