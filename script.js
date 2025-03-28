@@ -54,7 +54,8 @@ const rect2 = new Konva.Rect({
 });
 layer.add(rect2);
 
-const SOURCE = "https://jmp.sh/s/LkLgA40MTzD6VFtJcFLx.svg";
+const SOURCE =
+  "https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/010_ranunculus.svg";
 Konva.Image.fromURL(SOURCE, (imageNode) => {
   layer.add(imageNode);
   imageNode.setAttrs({
