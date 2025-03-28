@@ -197,8 +197,7 @@ Konva.Image.fromURL(RANUNCULUS, (imageNode) => {
     name: "ranunculus",
   });
 
-  const scaleFactor = getScaleFactor(0.25, 2);
-  //   const scaleFactor = 2;
+  const scaleFactor = getScaleFactor(0.2, 2);
   imageNode.scale({ x: scaleFactor, y: scaleFactor });
 
   layer.add(imageNode);
@@ -212,8 +211,7 @@ Konva.Image.fromURL(ROSE, (imageNode) => {
     name: "rose",
   });
 
-  const scaleFactor = getScaleFactor(1, 2);
-  //   const scaleFactor = 2;
+  const scaleFactor = getScaleFactor(0.35, 2);
   imageNode.scale({ x: scaleFactor, y: scaleFactor });
 });
 
@@ -226,7 +224,6 @@ Konva.Image.fromURL(MONSTERA, (imageNode) => {
   });
 
   const scaleFactor = getScaleFactor(0.25, 1.25);
-  //   const scaleFactor = 1.25;
   imageNode.scale({ x: scaleFactor, y: scaleFactor });
 });
 
@@ -239,7 +236,6 @@ Konva.Image.fromURL(HIBISCUS, (imageNode) => {
   });
 
   const scaleFactor = getScaleFactor(0.25, 1.25);
-  //   const scaleFactor = 1.25;
   imageNode.scale({ x: scaleFactor, y: scaleFactor });
 });
 
