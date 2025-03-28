@@ -14,6 +14,7 @@ const elementsURL = {
   monstera: `${baseURL}008_monstera.svg`,
   rose: `${baseURL}009_rose.svg`,
   ranunculus: `${baseURL}010_ranunculus.svg`,
+  hibiscus: `${baseURL}013_hibiscus.svg`,
 };
 
 // ********** SET THE BACKGROUND COLOR **********
@@ -153,7 +154,7 @@ Konva.Image.fromURL(logo, (imageNode) => {
   layer.draw();
 });
 
-// ********** ELEMENTS **********
+// ********** CIRCLE **********
 
 let circleActive = false;
 
@@ -167,23 +168,40 @@ const circle = new Konva.Circle({
 });
 layer.add(circle);
 
-let ranunculusActive = false;
+// ********** FLOWERS **********
+
+let ranunculusActive = true;
 let roseActive = false;
 let monsteraActive = false;
+let hibiscusActive = false;
+
+function getScaleFactor(customScale) {
+  const screenWidth = window.innerWidth;
+  let scaleFactor;
+
+  if (screenWidth <= 480) {
+    scaleFactor = 0.1;
+  } else if (screenWidth <= 1024) {
+    scaleFactor = 0.5;
+  } else {
+    scaleFactor = customScale;
+  }
+
+  return scaleFactor;
+}
 
 const RANUNCULUS = elementsURL.ranunculus;
 Konva.Image.fromURL(RANUNCULUS, (imageNode) => {
-  if (ranunculusActive) {
-    ranunculusActive = false;
-  }
-  layer.add(imageNode);
   imageNode.setAttrs({
     draggable: true,
     name: "ranunculus",
   });
 
-  const scaleFactor = 2;
+  const scaleFactor = getScaleFactor(2);
+  //   const scaleFactor = 2;
   imageNode.scale({ x: scaleFactor, y: scaleFactor });
+
+  layer.add(imageNode);
 });
 
 const ROSE = elementsURL.rose;
@@ -194,7 +212,8 @@ Konva.Image.fromURL(ROSE, (imageNode) => {
     name: "rose",
   });
 
-  const scaleFactor = 2;
+  const scaleFactor = getScaleFactor(2);
+  //   const scaleFactor = 2;
   imageNode.scale({ x: scaleFactor, y: scaleFactor });
 });
 
@@ -206,9 +225,43 @@ Konva.Image.fromURL(MONSTERA, (imageNode) => {
     name: "monstera",
   });
 
-  const scaleFactor = 1.25;
+  const scaleFactor = getScaleFactor(1.25);
+  //   const scaleFactor = 1.25;
   imageNode.scale({ x: scaleFactor, y: scaleFactor });
 });
+
+const HIBISCUS = elementsURL.hibiscus;
+Konva.Image.fromURL(HIBISCUS, (imageNode) => {
+  layer.add(imageNode);
+  imageNode.setAttrs({
+    draggable: true,
+    name: "monstera",
+  });
+
+  const scaleFactor = getScaleFactor(1.25);
+  //   const scaleFactor = 1.25;
+  imageNode.scale({ x: scaleFactor, y: scaleFactor });
+});
+
+// ********** TOOLBOX ITEMS **********
+
+const ranunculusButton = document.getElementById("ranunculus");
+const roseButton = document.getElementById("rose");
+const monsteraButton = document.getElementById("monstera");
+const hibiscusButton = document.getElementById("hibiscus");
+
+ranunculusButton.onclick = function () {
+  ranunculusActive = !ranunculusActive;
+
+  ranunculusButton.classList.toggle("active", ranunculusActive);
+  updateCanvas();
+};
+
+const updateCanvas = () => {
+  if (ranunculusActive) {
+    // addImage();
+  }
+};
 
 // ********** DRAG, ROTATE & SCALE **********
 
@@ -305,36 +358,6 @@ stage.on("click tap", function (e) {
     tr.nodes(nodes);
   }
 });
-
-// ********** TOOLBOX ITEMS **********
-
-const flower = document.getElementById("flower");
-const tree = document.getElementById("tree");
-
-let flowerActive = false;
-let treeActive = false;
-
-flower.onclick = function () {
-  flowerActive = !flowerActive;
-
-  flower.classList.toggle("active", flowerActive);
-  updateCanvas();
-};
-
-tree.onclick = function () {
-  console.log("tree");
-  treeActive = !treeActive;
-
-  tree.classList.toggle("active", treeActive);
-};
-
-const updateCanvas = () => {
-  console.log("updateCanvas", flowerActive, treeActive);
-
-  if (flowerActive && flowerNode) {
-    // addImage();
-  }
-};
 
 // ********** DOWNLOAD **********
 

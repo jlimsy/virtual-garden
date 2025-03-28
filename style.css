@@ -27,6 +27,10 @@ canvas
     border-radius: 10px;
 }
 
+p {
+    text-align: center;
+}
+
 #toolbox
 {
     border-radius: 10px;
@@ -50,6 +54,7 @@ canvas
     background: blanchedalmond;
     background-repeat: no-repeat;  
     background-size: 200%;
+    padding: 2px;
 }
 
 #ranunculus
@@ -72,6 +77,11 @@ canvas
 
 }
 
+#hibiscus
+{
+    background-image: url("https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/013_hibiscus.svg");
+    background-position: bottom;
+}
 
 /* background color selection */
 
@@ -110,7 +120,7 @@ canvas
 
 .item:hover
 {
-    background-color: #c5d6e0    ;
+    background-color: #c5d6e0;
 }
 
 
@@ -118,4 +128,17 @@ canvas
 {
     border: 2px solid #888888;
     padding: 0px;
+}
+
+#download
+{
+    margin: 20px;
+    background: #f0d3d3;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+#download:hover
+{
+    background-color: #c0cfb2;
 }
