@@ -6,10 +6,13 @@ const stage = new Konva.Stage({
 
 // ********** URL **********
 
+const baseURL =
+  "https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/";
+
 const elementsURL = {
-  logo: "https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/logo.svg",
-  ranunculus:
-    "https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/010_ranunculus.svg",
+  logo: `${baseURL}logo.svg`,
+  rose: `${baseURL}009_rose.svg`,
+  ranunculus: `${baseURL}010_ranunculus.svg`,
 };
 
 // ********** SET THE BACKGROUND COLOR **********
@@ -70,12 +73,19 @@ const circle = new Konva.Circle({
 });
 layer.add(circle);
 
-const ranunculus = elementsURL.ranunculus;
-Konva.Image.fromURL(ranunculus, (imageNode) => {
+const RANUNCULUS = elementsURL.ranunculus;
+Konva.Image.fromURL(RANUNCULUS, (imageNode) => {
   layer.add(imageNode);
   imageNode.setAttrs({
-    width: 150,
-    height: 150,
+    draggable: true,
+    name: "ranunculus",
+  });
+});
+
+const ROSE = elementsURL.rose;
+Konva.Image.fromURL(ROSE, (imageNode) => {
+  layer.add(imageNode);
+  imageNode.setAttrs({
     draggable: true,
     name: "ranunculus",
   });
