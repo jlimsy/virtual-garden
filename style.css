@@ -1,5 +1,5 @@
 * {
-    background-color: #FFC9C4;
+    background-color: #FAF9F6;
     font-family: "Playwrite HU", cursive;
     font-optical-sizing: auto;
     font-weight: 400;
@@ -19,19 +19,18 @@ main {
     justify-content: center;
     align-items: center;
     background: #EEE; 
-    border-radius: 10px;
 } 
 
 canvas
 {
     background-color: #BBC397;
+    border-radius: 10px;
 }
 
 #toolbox
 {
     border-radius: 10px;
-    width: 200px;
-    
+    width: auto;
 }
 
 #toolbox-items, #bg-selection-items
@@ -40,25 +39,83 @@ canvas
     gap: 10px;
     align-items: center;
     justify-content: center;
+}
+
+.item 
+{
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    border-radius: 10px;
+    background: blanchedalmond;
+    background-repeat: no-repeat;  
+    background-size: 200%;
+}
+
+#ranunculus
+{
+    background-image: url("https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/010_ranunculus.svg");
+    background-position: center;
+  
+}
+
+#rose
+{
+    background-image: url("https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/009_rose.svg");
 
 }
 
-.bg-color, .item 
+#monstera
 {
-    width: 50px;
-    height: 50px;
+    background-image: url("https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/008_monstera.svg");
+    background-position: center;
+
+}
+
+
+/* background color selection */
+
+.bg-color
+{
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    padding:2px;
+}
+
+#blue
+{
+    background-color: #c5d6e0;
+}
+
+#pink
+{
+    background-color: #f0d3d3;
+}
+
+#ivory
+{
+    background-color: #dfd6d1;
+}
+
+#cream
+{
     background-color: blanchedalmond;
-    text-align: center;
-    border-radius: 10px;
+}
+
+#green
+{
+    background-color: #c0cfb2;
 }
 
 .item:hover
 {
-    background-color: yellow;
+    background-color: #c5d6e0    ;
 }
 
 
 .active 
 {
-    border: 3px solid black;
+    border: 2px solid #888888;
+    padding: 0px;
 }

@@ -11,6 +11,7 @@ const baseURL =
 
 const elementsURL = {
   logo: `${baseURL}logo.svg`,
+  monstera: `${baseURL}008_monstera.svg`,
   rose: `${baseURL}009_rose.svg`,
   ranunculus: `${baseURL}010_ranunculus.svg`,
 };
@@ -25,10 +26,101 @@ const background = new Konva.Rect({
   y: 0,
   width: stage.width(),
   height: stage.height(),
-  fill: "#BBC397",
+  fill: "#c5d6e0",
   strokeWidth: 4,
 });
 layer.add(background);
+
+// ********** SELECT BG COLOR **********
+
+const colors = {
+  blue: "#c5d6e0",
+  pink: "#f0d3d3",
+  ivory: "#dfd6d1",
+  cream: "blanchedalmond",
+  green: "#c0cfb2",
+};
+
+let blueActive = false;
+let pinkActive = false;
+let ivoryActive = false;
+let creamActive = false;
+let greenActive = false;
+
+const blue = document.getElementById("blue");
+const pink = document.getElementById("pink");
+const ivory = document.getElementById("ivory");
+const cream = document.getElementById("cream");
+const green = document.getElementById("green");
+
+blue.onclick = function () {
+  blueActive = true;
+
+  if (blueActive) {
+    pinkActive = ivoryActive = creamActive = greenActive = false;
+    background.fill(colors.blue);
+  }
+
+  updateButtons();
+};
+
+pink.onclick = function () {
+  pinkActive = true;
+
+  if (pinkActive) {
+    blueActive = ivoryActive = creamActive = greenActive = false;
+    background.fill(colors.pink);
+  }
+
+  updateButtons();
+};
+
+ivory.onclick = function () {
+  ivoryActive = true;
+
+  if (ivoryActive) {
+    blueActive = pinkActive = creamActive = greenActive = false;
+    background.fill(colors.ivory);
+  }
+
+  updateButtons();
+};
+
+cream.onclick = function () {
+  creamActive = true;
+
+  if (creamActive) {
+    blueActive = pinkActive = ivoryActive = greenActive = false;
+    background.fill(colors.cream);
+  }
+
+  updateButtons();
+};
+
+green.onclick = function () {
+  greenActive = true;
+
+  if (greenActive) {
+    blueActive = pinkActive = ivoryActive = creamActive = false;
+    background.fill(colors.green);
+  }
+
+  updateButtons();
+};
+
+function updateButtons() {
+  [blue, pink, ivory, cream, green].forEach((btn) =>
+    btn.classList.remove("active")
+  );
+
+  if (blueActive) blue.classList.add("active");
+  if (pinkActive) pink.classList.add("active");
+  if (ivoryActive) ivory.classList.add("active");
+  if (creamActive) cream.classList.add("active");
+  if (greenActive) green.classList.add("active");
+
+  layer.draw();
+}
 
 // ********** LOGO **********
 
@@ -63,6 +155,8 @@ Konva.Image.fromURL(logo, (imageNode) => {
 
 // ********** ELEMENTS **********
 
+let circleActive = false;
+
 const circle = new Konva.Circle({
   x: stage.width() / 2,
   y: stage.height() / 2,
@@ -73,13 +167,23 @@ const circle = new Konva.Circle({
 });
 layer.add(circle);
 
+let ranunculusActive = false;
+let roseActive = false;
+let monsteraActive = false;
+
 const RANUNCULUS = elementsURL.ranunculus;
 Konva.Image.fromURL(RANUNCULUS, (imageNode) => {
+  if (ranunculusActive) {
+    ranunculusActive = false;
+  }
   layer.add(imageNode);
   imageNode.setAttrs({
     draggable: true,
     name: "ranunculus",
   });
+
+  const scaleFactor = 2;
+  imageNode.scale({ x: scaleFactor, y: scaleFactor });
 });
 
 const ROSE = elementsURL.rose;
@@ -87,11 +191,26 @@ Konva.Image.fromURL(ROSE, (imageNode) => {
   layer.add(imageNode);
   imageNode.setAttrs({
     draggable: true,
-    name: "ranunculus",
+    name: "rose",
   });
+
+  const scaleFactor = 2;
+  imageNode.scale({ x: scaleFactor, y: scaleFactor });
 });
 
-// ********** ROTATE & SCALE **********
+const MONSTERA = elementsURL.monstera;
+Konva.Image.fromURL(MONSTERA, (imageNode) => {
+  layer.add(imageNode);
+  imageNode.setAttrs({
+    draggable: true,
+    name: "monstera",
+  });
+
+  const scaleFactor = 1.25;
+  imageNode.scale({ x: scaleFactor, y: scaleFactor });
+});
+
+// ********** DRAG, ROTATE & SCALE **********
 
 const tr = new Konva.Transformer();
 layer.add(tr);
@@ -101,9 +220,6 @@ let selectionRectangle = new Konva.Rect({
   visible: false,
 });
 layer.add(selectionRectangle);
-
-console.log("Selection Rectangle", selectionRectangle);
-console.log("stage", stage);
 
 let x1, y1, x2, y2;
 stage.on("mousedown touchstart", (e) => {
@@ -149,7 +265,7 @@ stage.on("mouseup touchend", () => {
   });
 
   const shapes = stage.find("Shape").filter((shape) => shape.draggable());
-  console.log("shapes", shapes);
+
   const box = selectionRectangle.getClientRect();
   const selected = shapes.filter((shape) =>
     Konva.Util.haveIntersection(box, shape.getClientRect())
