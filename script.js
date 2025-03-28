@@ -175,16 +175,16 @@ let roseActive = false;
 let monsteraActive = false;
 let hibiscusActive = false;
 
-function getScaleFactor(customScale) {
+function getScaleFactor(customSmallScale, customLargeScale) {
   const screenWidth = window.innerWidth;
   let scaleFactor;
 
   if (screenWidth <= 480) {
-    scaleFactor = 0.1;
+    scaleFactor = customSmallScale;
   } else if (screenWidth <= 1024) {
     scaleFactor = 0.5;
   } else {
-    scaleFactor = customScale;
+    scaleFactor = customLargeScale;
   }
 
   return scaleFactor;
@@ -197,7 +197,7 @@ Konva.Image.fromURL(RANUNCULUS, (imageNode) => {
     name: "ranunculus",
   });
 
-  const scaleFactor = getScaleFactor(2);
+  const scaleFactor = getScaleFactor(0.25, 2);
   //   const scaleFactor = 2;
   imageNode.scale({ x: scaleFactor, y: scaleFactor });
 
@@ -212,7 +212,7 @@ Konva.Image.fromURL(ROSE, (imageNode) => {
     name: "rose",
   });
 
-  const scaleFactor = getScaleFactor(2);
+  const scaleFactor = getScaleFactor(1, 2);
   //   const scaleFactor = 2;
   imageNode.scale({ x: scaleFactor, y: scaleFactor });
 });
@@ -225,7 +225,7 @@ Konva.Image.fromURL(MONSTERA, (imageNode) => {
     name: "monstera",
   });
 
-  const scaleFactor = getScaleFactor(1.25);
+  const scaleFactor = getScaleFactor(0.25, 1.25);
   //   const scaleFactor = 1.25;
   imageNode.scale({ x: scaleFactor, y: scaleFactor });
 });
@@ -238,7 +238,7 @@ Konva.Image.fromURL(HIBISCUS, (imageNode) => {
     name: "monstera",
   });
 
-  const scaleFactor = getScaleFactor(1.25);
+  const scaleFactor = getScaleFactor(0.25, 1.25);
   //   const scaleFactor = 1.25;
   imageNode.scale({ x: scaleFactor, y: scaleFactor });
 });
