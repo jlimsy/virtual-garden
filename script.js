@@ -168,13 +168,21 @@ const circle = new Konva.Circle({
 });
 layer.add(circle);
 
-// ********** FLOWERS **********
+// circle.hide();
 
-let ranunculusActive = true;
+// ********** GARDEN PLANTS **********
+
+const RANUNCULUS = elementsURL.ranunculus;
+const ROSE = elementsURL.rose;
+const MONSTERA = elementsURL.monstera;
+const HIBISCUS = elementsURL.hibiscus;
+
+let ranunculusActive = false;
 let roseActive = false;
 let monsteraActive = false;
 let hibiscusActive = false;
 
+// Adjust scale factor based on device size
 function getScaleFactor(customSmallScale, customLargeScale) {
   const screenWidth = window.innerWidth;
   let scaleFactor;
@@ -190,54 +198,75 @@ function getScaleFactor(customSmallScale, customLargeScale) {
   return scaleFactor;
 }
 
-const RANUNCULUS = elementsURL.ranunculus;
-Konva.Image.fromURL(RANUNCULUS, (imageNode) => {
-  imageNode.setAttrs({
-    draggable: true,
-    name: "ranunculus",
+const addSVG = (plant, customSmallScale, customLargeScale, show) => {
+  Konva.Image.fromURL(plant, (imageNode) => {
+    imageNode.setAttrs({
+      draggable: true,
+      name: `${plant.toLowerCase()}`,
+    });
+
+    const scaleFactor = getScaleFactor(customSmallScale, customLargeScale);
+    imageNode.scale({ x: scaleFactor, y: scaleFactor });
+
+    const stageWidth = layer.getStage().width();
+    const stageHeight = layer.getStage().height();
+
+    imageNode.offsetX(imageNode.width() / 2);
+    imageNode.offsetY(imageNode.height() / 2);
+
+    imageNode.position({
+      x: stageWidth / 2,
+      y: stageHeight / 2,
+    });
+
+    layer.add(imageNode);
   });
+};
 
-  const scaleFactor = getScaleFactor(0.2, 2);
-  imageNode.scale({ x: scaleFactor, y: scaleFactor });
+// Konva.Image.fromURL(RANUNCULUS, (imageNode) => {
+//   imageNode.setAttrs({
+//     draggable: true,
+//     name: "ranunculus",
+//   });
 
-  layer.add(imageNode);
-});
+//   const scaleFactor = getScaleFactor(0.2, 2);
+//   imageNode.scale({ x: scaleFactor, y: scaleFactor });
 
-const ROSE = elementsURL.rose;
-Konva.Image.fromURL(ROSE, (imageNode) => {
-  layer.add(imageNode);
-  imageNode.setAttrs({
-    draggable: true,
-    name: "rose",
-  });
+//   layer.add(imageNode);
+// });
 
-  const scaleFactor = getScaleFactor(0.35, 2);
-  imageNode.scale({ x: scaleFactor, y: scaleFactor });
-});
+// Konva.Image.fromURL(ROSE, (imageNode) => {
+//   layer.add(imageNode);
+//   imageNode.setAttrs({
+//     draggable: true,
+//     name: "rose",
+//   });
 
-const MONSTERA = elementsURL.monstera;
-Konva.Image.fromURL(MONSTERA, (imageNode) => {
-  layer.add(imageNode);
-  imageNode.setAttrs({
-    draggable: true,
-    name: "monstera",
-  });
+//   const scaleFactor = getScaleFactor(0.35, 2);
+//   imageNode.scale({ x: scaleFactor, y: scaleFactor });
+// });
 
-  const scaleFactor = getScaleFactor(0.25, 1.25);
-  imageNode.scale({ x: scaleFactor, y: scaleFactor });
-});
+// Konva.Image.fromURL(MONSTERA, (imageNode) => {
+//   layer.add(imageNode);
+//   imageNode.setAttrs({
+//     draggable: true,
+//     name: "monstera",
+//   });
 
-const HIBISCUS = elementsURL.hibiscus;
-Konva.Image.fromURL(HIBISCUS, (imageNode) => {
-  layer.add(imageNode);
-  imageNode.setAttrs({
-    draggable: true,
-    name: "monstera",
-  });
+//   const scaleFactor = getScaleFactor(0.25, 1.25);
+//   imageNode.scale({ x: scaleFactor, y: scaleFactor });
+// });
 
-  const scaleFactor = getScaleFactor(0.25, 1.25);
-  imageNode.scale({ x: scaleFactor, y: scaleFactor });
-});
+// Konva.Image.fromURL(HIBISCUS, (imageNode) => {
+//   layer.add(imageNode);
+//   imageNode.setAttrs({
+//     draggable: true,
+//     name: "monstera",
+//   });
+
+//   const scaleFactor = getScaleFactor(0.25, 1.25);
+//   imageNode.scale({ x: scaleFactor, y: scaleFactor });
+// });
 
 // ********** TOOLBOX ITEMS **********
 
@@ -248,15 +277,30 @@ const hibiscusButton = document.getElementById("hibiscus");
 
 ranunculusButton.onclick = function () {
   ranunculusActive = !ranunculusActive;
-
   ranunculusButton.classList.toggle("active", ranunculusActive);
-  updateCanvas();
+
+  addSVG(RANUNCULUS, 0.2, 2, ranunculusActive);
 };
 
-const updateCanvas = () => {
-  if (ranunculusActive) {
-    // addImage();
-  }
+roseButton.onclick = function () {
+  roseActive = !roseActive;
+  roseButton.classList.toggle("active", roseActive);
+
+  addSVG(ROSE, 0.35, 2, roseActive);
+};
+
+monsteraButton.onclick = function () {
+  monsteraActive = !monsteraActive;
+  monsteraButton.classList.toggle("active", monsteraButton);
+
+  addSVG(MONSTERA, 0.25, 1.25, monsteraActive);
+};
+
+hibiscusButton.onclick = function () {
+  hibiscusActive = !hibiscusActive;
+  hibiscusButton.classList.toggle("active", hibiscusActive);
+
+  addSVG(HIBISCUS, 0.25, 1.25, hibiscusActive);
 };
 
 // ********** DRAG, ROTATE & SCALE **********
@@ -276,7 +320,6 @@ stage.on("mousedown touchstart", (e) => {
     return;
   }
 
-  console.log("mousedown", e.target);
   x1 = stage.getPointerPosition().x;
   y1 = stage.getPointerPosition().y;
   x2 = stage.getPointerPosition().x;
@@ -288,7 +331,6 @@ stage.on("mousedown touchstart", (e) => {
 });
 
 stage.on("mousemove touchmove", () => {
-  // do nothing if we didn't start selection
   if (!selectionRectangle.visible()) {
     return;
   }
@@ -304,38 +346,32 @@ stage.on("mousemove touchmove", () => {
 });
 
 stage.on("mouseup touchend", () => {
-  // do nothing if we didn't start selection
   if (!selectionRectangle.visible()) {
     return;
   }
-  // update visibility in timeout, so we can check it in click event
   setTimeout(() => {
     selectionRectangle.visible(false);
   });
 
-  const shapes = stage.find("Shape").filter((shape) => shape.draggable());
+  const elements = stage.find("Shape").filter((shape) => shape.draggable());
 
   const box = selectionRectangle.getClientRect();
-  const selected = shapes.filter((shape) =>
+  const selected = elements.filter((shape) =>
     Konva.Util.haveIntersection(box, shape.getClientRect())
   );
   tr.nodes(selected);
 });
 
-// clicks should select/deselect shapes
 stage.on("click tap", function (e) {
-  // if we are selecting with rect, do nothing
   if (selectionRectangle.visible()) {
     return;
   }
 
-  // if click on empty area - remove all selections
   if (e.target === stage) {
     tr.nodes([]);
     return;
   }
 
-  // do nothing if clicked NOT on our rectangles
   if (!e.target.draggable()) {
     return;
   }
@@ -349,9 +385,18 @@ stage.on("click tap", function (e) {
     const nodes = tr.nodes().filter((node) => node !== e.target);
     tr.nodes(nodes);
   } else if (metaPressed && !isSelected) {
-    // add the node into selection
     const nodes = tr.nodes().concat([e.target]);
     tr.nodes(nodes);
+  }
+});
+
+// Click outside stage to remove nodes
+
+document.addEventListener("click", function (e) {
+  const clickedOnStage = stage.getContainer().contains(e.target);
+
+  if (!clickedOnStage) {
+    tr.nodes([]); // Clear selection
   }
 });
 

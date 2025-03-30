@@ -1,5 +1,5 @@
 * {
-    background-color: #FAF9F6;
+    /* background-color: #FAF9F6; */
     font-family: "Playwrite HU", cursive;
     font-optical-sizing: auto;
     font-weight: 400;
@@ -15,17 +15,38 @@ main {
     padding-bottom: 50px;
 }
 
-.canvas-container {
+#canvas-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #EEE; 
 } 
 
 canvas
 {
     background-color: #BBC397;
     border-radius: 10px;
+}
+
+.about, #delete
+{
+    position: relative;
+    height: 35px;
+    width: 35px;
+    border-radius: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.about{
+    margin-right: 10px;
+    background-color: #f0d3d3;
+}
+
+#delete
+{
+    margin-left: 10px;
+    background-color: #f0d3d3;
 }
 
 p {
