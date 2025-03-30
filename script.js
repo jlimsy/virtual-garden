@@ -15,6 +15,7 @@ const elementsURL = {
   rose: `${baseURL}009_rose.svg`,
   ranunculus: `${baseURL}010_ranunculus.svg`,
   hibiscus: `${baseURL}013_hibiscus.svg`,
+  glassRose: `${baseURL}baptism.svg`,
 };
 
 // ********** SET THE BACKGROUND COLOR **********
@@ -176,11 +177,13 @@ const RANUNCULUS = elementsURL.ranunculus;
 const ROSE = elementsURL.rose;
 const MONSTERA = elementsURL.monstera;
 const HIBISCUS = elementsURL.hibiscus;
+const GLASSROSE = elementsURL.glassRose;
 
 let ranunculusActive = false;
 let roseActive = false;
 let monsteraActive = false;
 let hibiscusActive = false;
+let glassRoseActive = false;
 
 // Adjust scale factor based on device size
 function getScaleFactor(customSmallScale, customLargeScale) {
@@ -274,6 +277,7 @@ const ranunculusButton = document.getElementById("ranunculus");
 const roseButton = document.getElementById("rose");
 const monsteraButton = document.getElementById("monstera");
 const hibiscusButton = document.getElementById("hibiscus");
+const glassRoseButton = document.getElementById("glass-rose");
 
 ranunculusButton.onclick = function () {
   ranunculusActive = !ranunculusActive;
@@ -301,6 +305,13 @@ hibiscusButton.onclick = function () {
   hibiscusButton.classList.toggle("active", hibiscusActive);
 
   addSVG(HIBISCUS, 0.25, 1.25, hibiscusActive);
+};
+
+glassRoseButton.onclick = function () {
+  glassRoseActive = !glassRoseActive;
+  glassRoseButton.classList.toggle("active", glassRoseActive);
+
+  addSVG(GLASSROSE, 0.25, 1.25, glassRoseActive);
 };
 
 // ********** DRAG, ROTATE & SCALE **********
@@ -362,6 +373,11 @@ stage.on("mouseup touchend", () => {
   tr.nodes(selected);
 });
 
+const deleteButton = document.getElementById("delete");
+deleteButton.style.visibility = "hidden";
+
+let clickedElement;
+
 stage.on("click tap", function (e) {
   if (selectionRectangle.visible()) {
     return;
@@ -376,8 +392,14 @@ stage.on("click tap", function (e) {
     return;
   }
 
+  clickedElement = e.target;
+
+  if (clickedElement) {
+    deleteButton.style.visibility = "visible";
+  }
+
   const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
-  const isSelected = tr.nodes().includes(e.target);
+  isSelected = tr.nodes().includes(e.target);
 
   if (!metaPressed && !isSelected) {
     tr.nodes([e.target]);
@@ -398,6 +420,16 @@ document.addEventListener("click", function (e) {
   if (!clickedOnStage) {
     tr.nodes([]); // Clear selection
   }
+});
+
+// ********** DELETE **********
+
+deleteButton.addEventListener("click", function () {
+  console.log("clicked", clickedElement);
+
+  clickedElement.remove();
+
+  deleteButton.style.visibility = "hidden";
 });
 
 // ********** DOWNLOAD **********
