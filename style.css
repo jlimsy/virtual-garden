@@ -122,6 +122,18 @@ p {
     background-image: url("https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/sunflowers.svg");
 }
 
+#almond
+{
+    background-image: url("https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/almond.svg");
+    background-position: center;
+}
+
+#bouquet
+{
+    background-image: url("https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/bouquet.svg");
+    background-position: center;
+}
+
 /* background color selection */
 
 .bg-color
