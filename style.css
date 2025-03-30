@@ -7,7 +7,6 @@
     color: #222222;
 }
 
-
 main {
     display: flex;
     flex-direction: column;
@@ -41,6 +40,7 @@ canvas
 .about{
     margin-right: 10px;
     background-color: #f0d3d3;
+    background-image: url("https://raw.githubusercontent.com/jlimsy/virtual-garden/refs/heads/main/assets/baptism.svg");
 }
 
 #delete
@@ -144,7 +144,6 @@ p {
 {
     background-color: #c5d6e0;
 }
-
 
 .active 
 {
