@@ -17,6 +17,8 @@ const elementsURL = {
   hibiscus: `${baseURL}013_hibiscus.svg`,
   glassRose: `${baseURL}baptism.svg`,
   sunflowers: `${baseURL}sunflowers.svg`,
+  almond: `${baseURL}almond.svg`,
+  bouquet: `${baseURL}bouquet.svg`,
 };
 
 // ********** SET THE BACKGROUND COLOR **********
@@ -180,6 +182,8 @@ const MONSTERA = elementsURL.monstera;
 const HIBISCUS = elementsURL.hibiscus;
 const GLASSROSE = elementsURL.glassRose;
 const SUNFLOWERS = elementsURL.sunflowers;
+const ALMOND = elementsURL.almond;
+const BOUQUET = elementsURL.bouquet;
 
 let ranunculusActive = false;
 let roseActive = false;
@@ -187,6 +191,8 @@ let monsteraActive = false;
 let hibiscusActive = false;
 let glassRoseActive = false;
 let sunflowersActive = false;
+let almondActive = false;
+let bouquetActive = false;
 
 // Adjust scale factor based on device size
 function getScaleFactor(customSmallScale, customLargeScale) {
@@ -237,6 +243,8 @@ const monsteraButton = document.getElementById("monstera");
 const hibiscusButton = document.getElementById("hibiscus");
 const glassRoseButton = document.getElementById("glass-rose");
 const sunflowersButton = document.getElementById("sunflowers");
+const almondButton = document.getElementById("almond");
+const bouquetButton = document.getElementById("bouquet");
 
 ranunculusButton.onclick = function () {
   ranunculusActive = !ranunculusActive;
@@ -254,7 +262,7 @@ roseButton.onclick = function () {
 
 monsteraButton.onclick = function () {
   monsteraActive = !monsteraActive;
-  monsteraButton.classList.toggle("active", monsteraButton);
+  monsteraButton.classList.toggle("active", monsteraActive);
 
   addSVG(MONSTERA, 0.25, 1.25, monsteraActive);
 };
@@ -266,19 +274,33 @@ hibiscusButton.onclick = function () {
   addSVG(HIBISCUS, 0.25, 1.25, hibiscusActive);
 };
 
-glassRoseButton.onclick = function () {
-  glassRoseActive = !glassRoseActive;
-  glassRoseButton.classList.toggle("active", glassRoseActive);
+// glassRoseButton.onclick = function () {
+//   glassRoseActive = !glassRoseActive;
+//   glassRoseButton.classList.toggle("active", glassRoseActive);
 
-  addSVG(GLASSROSE, 0.25, 1.25, glassRoseActive);
-};
+//   addSVG(GLASSROSE, 0.25, 1.25, glassRoseActive);
+// };
 
-sunflowersButton.onclick = function () {
-  sunflowersActive = !sunflowersActive;
-  sunflowersButton.classList.toggle("active", sunflowersActive);
+// sunflowersButton.onclick = function () {
+//   sunflowersActive = !sunflowersActive;
+//   sunflowersButton.classList.toggle("active", sunflowersActive);
 
-  addSVG(SUNFLOWERS, 0.25, 1.8, sunflowersActive);
-};
+//   addSVG(SUNFLOWERS, 0.25, 1.8, sunflowersActive);
+// };
+
+// almondButton.onclick = function () {
+//   almondActive = !almondActive;
+//   almondButton.classList.toggle("active", almondActive);
+
+//   addSVG(ALMOND, 0.25, 1, almondActive);
+// };
+
+// bouquetButton.onclick = function () {
+//   bouquetActive = !bouquetActive;
+//   bouquetButton.classList.toggle("active", bouquetActive);
+
+//   addSVG(BOUQUET, 0.25, 1.75, bouquetActive);
+// };
 
 // ********** DRAG, ROTATE & SCALE **********
 
