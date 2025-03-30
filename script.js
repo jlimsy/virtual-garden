@@ -16,6 +16,7 @@ const elementsURL = {
   ranunculus: `${baseURL}010_ranunculus.svg`,
   hibiscus: `${baseURL}013_hibiscus.svg`,
   glassRose: `${baseURL}baptism.svg`,
+  sunflowers: `${baseURL}sunflowers.svg`,
 };
 
 // ********** SET THE BACKGROUND COLOR **********
@@ -178,12 +179,14 @@ const ROSE = elementsURL.rose;
 const MONSTERA = elementsURL.monstera;
 const HIBISCUS = elementsURL.hibiscus;
 const GLASSROSE = elementsURL.glassRose;
+const SUNFLOWERS = elementsURL.sunflowers;
 
 let ranunculusActive = false;
 let roseActive = false;
 let monsteraActive = false;
 let hibiscusActive = false;
 let glassRoseActive = false;
+let sunflowersActive = false;
 
 // Adjust scale factor based on device size
 function getScaleFactor(customSmallScale, customLargeScale) {
@@ -226,51 +229,6 @@ const addSVG = (plant, customSmallScale, customLargeScale, show) => {
   });
 };
 
-// Konva.Image.fromURL(RANUNCULUS, (imageNode) => {
-//   imageNode.setAttrs({
-//     draggable: true,
-//     name: "ranunculus",
-//   });
-
-//   const scaleFactor = getScaleFactor(0.2, 2);
-//   imageNode.scale({ x: scaleFactor, y: scaleFactor });
-
-//   layer.add(imageNode);
-// });
-
-// Konva.Image.fromURL(ROSE, (imageNode) => {
-//   layer.add(imageNode);
-//   imageNode.setAttrs({
-//     draggable: true,
-//     name: "rose",
-//   });
-
-//   const scaleFactor = getScaleFactor(0.35, 2);
-//   imageNode.scale({ x: scaleFactor, y: scaleFactor });
-// });
-
-// Konva.Image.fromURL(MONSTERA, (imageNode) => {
-//   layer.add(imageNode);
-//   imageNode.setAttrs({
-//     draggable: true,
-//     name: "monstera",
-//   });
-
-//   const scaleFactor = getScaleFactor(0.25, 1.25);
-//   imageNode.scale({ x: scaleFactor, y: scaleFactor });
-// });
-
-// Konva.Image.fromURL(HIBISCUS, (imageNode) => {
-//   layer.add(imageNode);
-//   imageNode.setAttrs({
-//     draggable: true,
-//     name: "monstera",
-//   });
-
-//   const scaleFactor = getScaleFactor(0.25, 1.25);
-//   imageNode.scale({ x: scaleFactor, y: scaleFactor });
-// });
-
 // ********** TOOLBOX ITEMS **********
 
 const ranunculusButton = document.getElementById("ranunculus");
@@ -278,6 +236,7 @@ const roseButton = document.getElementById("rose");
 const monsteraButton = document.getElementById("monstera");
 const hibiscusButton = document.getElementById("hibiscus");
 const glassRoseButton = document.getElementById("glass-rose");
+const sunflowersButton = document.getElementById("sunflowers");
 
 ranunculusButton.onclick = function () {
   ranunculusActive = !ranunculusActive;
@@ -312,6 +271,13 @@ glassRoseButton.onclick = function () {
   glassRoseButton.classList.toggle("active", glassRoseActive);
 
   addSVG(GLASSROSE, 0.25, 1.25, glassRoseActive);
+};
+
+sunflowersButton.onclick = function () {
+  sunflowersActive = !sunflowersActive;
+  sunflowersButton.classList.toggle("active", sunflowersActive);
+
+  addSVG(SUNFLOWERS, 0.25, 1.8, sunflowersActive);
 };
 
 // ********** DRAG, ROTATE & SCALE **********
