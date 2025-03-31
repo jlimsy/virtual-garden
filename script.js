@@ -420,6 +420,12 @@ deleteButton.addEventListener("click", function () {
   deleteButton.style.visibility = "hidden";
 });
 
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Delete" || ("Backspace" && clickedElement)) {
+    clickedElement.remove();
+  }
+});
+
 // ********** DOWNLOAD **********
 
 const download = document.getElementById("download");
